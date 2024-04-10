@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group 'FireBurnTime'
+version '3.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "http://gotti.no-ip.org/maven/repository" }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile 'org.gotti.wurmunlimited:server-modlauncher:0.43'
+}
+
+jar {
+    archiveName "${project.name}.jar"
+}
+
+
+tasks.register('dist', Zip) {
+    into("mods", {
+        into(project.name, {
+            from jar
+        })
+        from fileTree(dir: 'mods', include: '*')
+    })
+
+    archiveName "${project.name}-${project.version}.zip"
+}
